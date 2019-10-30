@@ -103,5 +103,9 @@ public class ConsultarOpcaoCompraPassos extends TestCucumberConfig implements Pt
         Então("deve retornar a mensagem {string}", (String mensagemEsperada) -> {
             Assert.assertEquals(mensagemEsperada, erro.getErrors().get(0).getDefaultMessage());
         });
+
+        Então("não deve retornar bebidas", () -> {
+            Assert.assertEquals(0, resultadoOpcaoBebidaDTO.getBebidas().size());
+        });
     }
 }

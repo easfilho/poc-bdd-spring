@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,10 +25,15 @@ public class BebidaService {
             Integer quantidade = consultaOpcaoBebidasDTO.getValorGastar()
                     .divide(bebidaDTO.getValor(), RoundingMode.HALF_EVEN)
                     .intValue();
-            List<OpcaoBebida> listaOpcaoBebida = Arrays.asList(new OpcaoBebida(bebidaDTO.getNome(), quantidade));
-            BigDecimal troco = consultaOpcaoBebidasDTO.getValorGastar()
-                    .subtract(bebidaDTO.getValor().multiply(new BigDecimal(quantidade)))
-                    .setScale(2, RoundingMode.HALF_EVEN);
+
+            List<OpcaoBebida> listaOpcaoBebida = new ArrayList<>();
+            BigDecimal troco = BigDecimal.ZERO;
+            if (quantidade > 0) {
+                listaOpcaoBebida.add(new OpcaoBebida(bebidaDTO.getNome(), quantidade));
+                troco = consultaOpcaoBebidasDTO.getValorGastar()
+                        .subtract(bebidaDTO.getValor().multiply(new BigDecimal(quantidade)))
+                        .setScale(2, RoundingMode.HALF_EVEN);
+            }
 
             return new ResultadoOpcaoBebidaDTO(listaOpcaoBebida, troco);
         }

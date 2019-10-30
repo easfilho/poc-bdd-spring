@@ -27,6 +27,7 @@ dependencies {
 	testCompile 'io.cucumber:cucumber-junit:4.8.0'
 	testCompile 'info.cukes:gherkin:2.12.2'
 	compile 'com.squareup.okhttp3:okhttp:3.14.3'
+	compile 'org.apache.commons:commons-lang3:3.9'
 }
 
 test {
